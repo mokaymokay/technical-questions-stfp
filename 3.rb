@@ -14,9 +14,9 @@
 # 2¢, 2¢
 
 def change_possibilities(amount,denominations)
-  # create array of all repeated permutations with length of 2 to amount
+  # create array of all repeated permutations with length up to amount
   possibilities = []
-  n = 2
+  n = 1
   while n <= amount
     possibilities.push(denominations.repeated_permutation(n).to_a)
     n += 1
@@ -28,6 +28,9 @@ def change_possibilities(amount,denominations)
     p.map! { |c| "#{c}¢" }
     puts p.join(', ')
   end
+  # output
+  possibilities.length
 end
 
-change_possibilities(4,[1,2,3])
+puts change_possibilities(4,[1,2,3])
+puts change_possibilities(10,[1,2,3,4])
