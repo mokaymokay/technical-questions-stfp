@@ -8,6 +8,13 @@
 
 # Note: this solution only works with 2 levels of nested square brackets
 
+def replace_encoded(str, regex)
+  str.scan(regex).each do |x|
+    str = str.sub("#{x[0]}[#{x[1]}]", x[1] * x[0].to_i)
+  end
+  str
+end
+
 def decode_string(s)
   # regex to catch multiple encoded
   mult_re = /(\d+)\[(.*?)\]/
@@ -16,20 +23,13 @@ def decode_string(s)
   substring = s.match(re)[2]
   # check that square brackets are nested and replace k[encoded] with encoded * k in substring
   if substring.scan(mult_re).length > 1
-    substring.scan(mult_re).each do |x|
-      substring = substring.sub("#{x[0]}[#{x[1]}]", x[1] * x[0].to_i)
-    end
+    substring = replace_encoded(substring, mult_re)
   elsif substring.scan(re).length == 1
-    substring.scan(re).each do |x|
-      substring = substring.sub("#{x[0]}[#{x[1]}]", x[1] * x[0].to_i)
-    end
+    substring = replace_encoded(substring, re)
   end
   # for each ocurrence of k[encoded], replace it with encoded * k
   s = s.sub(s.match(re)[2], substring)
-  s.scan(mult_re).each do |x|
-    s = s.sub("#{x[0]}[#{x[1]}]", x[1] * x[0].to_i)
-  end
-  s
+  s = replace_encoded(s, mult_re)
 end
 
 puts decode_string("b3[a]")
