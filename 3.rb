@@ -13,6 +13,8 @@
 # 1¢, 3¢
 # 2¢, 2¢
 
+# This is a really inefficient solution but it truly demonstrates the power of Ruby (as well as my resourcefulness)
+
 def change_possibilities(amount,denominations)
   # create array of all repeated permutations with length up to amount
   possibilities = []
